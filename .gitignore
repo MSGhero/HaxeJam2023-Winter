@@ -1,0 +1,7 @@
+.ecs_invalidation
+*.ogg
+export/hl
+export/js/*.js
+export/js/*.map
+export/bin.zip
+.vscode

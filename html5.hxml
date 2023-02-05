@@ -1,0 +1,16 @@
+-cp source
+-D resourcesPath=assets
+
+-D windowSize=960x540
+
+-D ecs.no_debug_output
+
+-lib heaps
+-lib ecs
+-lib mono2D
+-lib haxeui-heaps
+-lib newgrounds
+
+-js export/js/HaxeJam2023W.js
+-main Main
+-debug

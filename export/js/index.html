@@ -1,0 +1,44 @@
+<!DOCTYPE>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<title>HaxeJam 2023 Winter</title>
+	<meta name="msapplication-tap-highlight" content="no" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+</head>
+<body onclick="window.focus()">
+	<canvas globalevents="0" propagatekeyevents="false" id="webgl"></canvas>
+	<script type="text/javascript" src="HaxeJam2023W.js" async></script>
+	<script>
+		window.addEventListener("touchmove", function (event) { event.preventDefault (); }, { capture: false, passive: false });
+	</script>
+	<style>
+		html {
+			background-color: black;
+		}
+
+		html,body { 
+			margin: 0;     
+			padding: 0; 
+			height: 100%; 
+			overflow: hidden;
+		}
+
+		html, body, canvas {
+			touch-action: none;
+			touch-action-delay: none;
+			user-select: none;
+			-webkit-tap-highlight-color: transparent;
+			-webkit-touch-callout : none;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+		}
+
+		canvas#webgl {
+			width: 100% !important;
+			height: 100% !important;
+		}
+	</style>
+</body>
+</html>
