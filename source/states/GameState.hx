@@ -1,6 +1,6 @@
 package states;
 
-import ecs.Universe;
+import ui.elements.UI_Game;
 
 class GameState extends State {
 	
@@ -18,6 +18,7 @@ class GameState extends State {
 	
 	public function enter() {
 		
+		new UI_Game(ecs);
 	}
 	
 	public function exit() {
