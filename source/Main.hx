@@ -1,5 +1,6 @@
 package;
 
+import mono.input.MouseInput;
 import io.newgrounds.NG;
 import IDs.SheetID;
 import states.DebugState;
@@ -37,6 +38,8 @@ import mono.animation.AnimCommand;
 import states.StateSystem;
 import states.StateCommand;
 import ui.UISystem;
+import mono.interactive.InteractiveSystem;
+import mono.input.MouseSystem;
 
 #if js
 import mono.utils.ResTools;
@@ -116,9 +119,11 @@ class Main extends App {
 					enabled : false,
 					systems : [
 						InputSystem,
+						MouseSystem,
 						StateSystem,
 						RenderSystem,
 						AnimSystem,
+						InteractiveSystem,
 						UISystem,
 						PauseSystem, // needed here?
 						TimingSystem,
@@ -164,7 +169,7 @@ class Main extends App {
 		
 		var sheet = new Spritesheet();
 		// load sprites in
-		ecs.setResources(sheet);
+		ecs.setResources(sheet, s2d);
 		
 		var input = new Input();
 		
@@ -173,6 +178,9 @@ class Main extends App {
 		
 		var pmap = DefaultMappings.getDefaultPad();
 		input.addDevice(new PadInput(pmap));
+		
+		var mmap = DefaultMappings.getDefaultMouse();
+		input.addDevice(new MouseInput(mmap));
 		
 		var debug = new states.DebugState(ecs);
 		var game = new states.GameState(ecs);
@@ -252,12 +260,6 @@ class Main extends App {
 	
 	override function onResize() {
 		super.onResize();
-		
-		var scale = 1;
-		
-		final screen = Window.getInstance();
-		//var w = Std.int(screen.width / scale);
-		//var h = Std.int(screen.height / scale);
 		
 		s2d.scaleMode = ScaleMode.LetterBox(960, 540); // is this correct?
 	}

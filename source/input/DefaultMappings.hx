@@ -37,4 +37,14 @@ class DefaultMappings {
 		
 		return mapping;
 	}
+	
+	public static function getDefaultMouse() {
+		
+		var mapping = new InputMapping();
+		
+		mapping[Action.SELECT] = [Key.MOUSE_LEFT];
+		mapping[Action.BACK] = [Key.MOUSE_RIGHT];
+		
+		return mapping;
+	}
 }

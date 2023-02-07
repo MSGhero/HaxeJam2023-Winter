@@ -53,6 +53,7 @@ class FPS extends Object {
 		
 		// maybe text update is on updater (eg at 4 fps) while internal updating is faster
 		
+		@:privateAccess
 		numbers.text =
 			Std.string(Math.round(1 / dt)) + "\n" +
 			Std.string(Math.ceil(Engine.getCurrent().mem.usedMemory / 1024)) + "\n" +
