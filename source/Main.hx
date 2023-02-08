@@ -169,8 +169,7 @@ class Main extends App {
 		
 		var sheet = new Spritesheet();
 		// load sprites in
-		sheet.loadSingle(Res.images.playcard_idle, "playcard_idle");
-		sheet.loadSingle(Res.images.playcard_hover, "playcard_hover");
+		sheet.loadTexturePackerData(Res.sheets.sprites, Res.data.sprites.entry.getText());
 		ecs.setResources(sheet, s2d);
 		
 		var input = new Input();

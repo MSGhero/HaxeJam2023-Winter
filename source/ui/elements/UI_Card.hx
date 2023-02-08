@@ -1,48 +1,84 @@
 package ui.elements;
 
 import h2d.Bitmap;
-import mono.interactive.shapes.Rect;
 import haxe.ui.core.Component;
-import mono.interactive.Interactive;
 import IDs.SheetID;
 import mono.animation.AnimCommand;
-import mono.command.Command;
 import mono.animation.AnimRequest;
+import IDs.ParentID;
+import IDs.LayerID;
+import mono.graphics.DisplayListCommand;
+import mono.command.Command;
 import ecs.Universe;
+import haxe.ui.containers.Absolute;
 
-class UI_Card {
+@:build(haxe.ui.ComponentBuilder.build("assets/ui/card.xml"))
+class UI_Card extends Absolute {
 	
-	public static function setup(ecs:Universe, compo:Component, frames:Array<String>, width:Int, height:Int) {
+	public function new(ecs:Universe) {
+		super();
 		
-		final uiE = ecs.createEntity();
+		styleable = false;
 		
-		var anim:Array<AnimRequest> = [
+		final bgE = ecs.createEntity();
+		
+		final bgAnim:Array<AnimRequest> = [
 			{
 				name : "idle",
-				frameNames : [frames[0]],
-				loop : false
-			},
-			{
-				name : "hover",
-				frameNames : [frames[1]],
+				frameNames : ["card_background"],
 				loop : false
 			}
 		];
 		
-		var int:Interactive = {
-			shape : new Rect(compo.left + width / 2, compo.top + height / 2, width, height),
-			onOver : () -> {
-				Command.queue(PLAY_ANIMATION(uiE, "hover"));
-				hxd.System.setCursor(Button);
-				
-			},
-			onOut : () -> {
-				Command.queue(PLAY_ANIMATION(uiE, "idle"));
-				hxd.System.setCursor(Default);
-			}
-		};
+		final cardE = ecs.createEntity();
 		
-		ecs.setComponents(uiE, int, (compo:Component), (compo.getImageDisplay().sprite:Bitmap));
-		Command.queue(CREATE_ANIMATIONS(uiE, SPRITES, anim, "idle"));
+		var cardAnim:Array<AnimRequest> = [
+			{
+				name : "state0",
+				frameNames : ["card_fire"],
+				loop : false
+			},
+			{
+				name : "state1",
+				frameNames : ["card_sun"],
+				loop : false
+			},
+			{
+				name : "state2",
+				frameNames : ["card_ice1"],
+				loop : false
+			},
+			{
+				name : "state3",
+				frameNames : ["card_ice2"],
+				loop : false
+			},
+			{
+				name : "state4",
+				frameNames : ["card_time"],
+				loop : false
+			},
+			{
+				name : "state5",
+				frameNames : ["card_water1"],
+				loop : false
+			},
+			{
+				name : "state6",
+				frameNames : ["card_water2"],
+				loop : false
+			}
+		];
+		
+		ecs.setComponents(bgE, (bg:Component), (bg.getImageDisplay().sprite:Bitmap));
+		ecs.setComponents(cardE, (card:Component), (card.getImageDisplay().sprite:Bitmap));
+		
+		Command.queueMany(
+			CREATE_ANIMATIONS(bgE, SPRITES, bgAnim, "idle"),
+			CREATE_ANIMATIONS(cardE, SPRITES, cardAnim, "state0"),
+			ADD_TO(this, S2D, DEBUG)
+		);
+		
+		ready();
 	}
 }
