@@ -110,7 +110,7 @@ class Main extends App {
 		}
 		*/
 		
-		engine.backgroundColor = 0xff888888;
+		engine.backgroundColor = 0xfff3ecd9;
 		
 		ecs = Universe.create({
 			entities : 400,
