@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <absolute left="100" top="320">
-	<component id="bg" left="0" top="0" />
-	<slider id="light" pos="100" left="0" top="0" />
+	<component id="bg" left="0" top="2" />
+	<slider id="soil" pos="50" left="25" top="0" width="127" />
+	<slider id="temp" pos="50" left="25" top="33" width="127" />
+	<slider id="light" pos="50" left="25" top="74" width="127" />
 </absolute>

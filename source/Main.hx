@@ -1,5 +1,6 @@
 package;
 
+import h2d.filter.Nothing;
 import mono.input.MouseInput;
 import io.newgrounds.NG;
 import IDs.SheetID;
@@ -261,6 +262,15 @@ class Main extends App {
 	
 	override function onResize() {
 		super.onResize();
+		
+		var window = Window.getInstance();
+		
+		// scale pixel art using NN instead of something smarter
+		if ((window.width > 960 || window.height > 540)) {
+			if (s2d.filter == null) s2d.filter = new Nothing();
+		}
+		
+		else if (s2d.filter != null) s2d.filter = null;
 		
 		s2d.scaleMode = ScaleMode.LetterBox(960, 540); // is this correct?
 	}

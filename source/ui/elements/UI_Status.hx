@@ -20,6 +20,7 @@ class UI_Status extends Absolute {
 		super();
 		
 		styleable = false;
+		disabled = true;
 		
 		final bgE = ecs.createEntity();
 		
@@ -31,9 +32,8 @@ class UI_Status extends Absolute {
 			}
 		];
 		
-		final thumbE = ecs.createEntity();
-		
-		var thumbAnim:Array<AnimRequest> = [
+		final sliders = [soil, temp, light];
+		final thumbAnim:Array<AnimRequest> = [
 			{
 				name : "idle",
 				frameNames : ["soil_temp_light_thumbnail"],
@@ -41,18 +41,21 @@ class UI_Status extends Absolute {
 			}
 		];
 		
-		var thumb = light.findComponent("end-thumb");
-		thumb.styleable = false;
-		
-		// get rid of blue range without messing up positions
-		// light.findComponent("range", Range).styleString = "background:red";
+		for (slider in sliders) {
+			final thumbE = ecs.createEntity();
+			final thumb = slider.findComponent("end-thumb");
+			thumb.styleable = false;
+			slider.styleable = false;
+			slider.findComponent("range", Range).styleable = false;
+			slider.findComponent("range-value").styleable = false;
+			ecs.setComponents(thumbE, (thumb:Component), (thumb.getImageDisplay().sprite:Bitmap));
+			Command.queue(CREATE_ANIMATIONS(thumbE, SPRITES, thumbAnim, "idle"));
+		}
 		
 		ecs.setComponents(bgE, (bg:Component), (bg.getImageDisplay().sprite:Bitmap));
-		ecs.setComponents(thumbE, (thumb:Component), (thumb.getImageDisplay().sprite:Bitmap));
 		
 		Command.queueMany(
 			CREATE_ANIMATIONS(bgE, SPRITES, bgAnim, "idle"),
-			CREATE_ANIMATIONS(thumbE, SPRITES, thumbAnim, "idle"),
 			ADD_TO(this, S2D, DEBUG)
 		);
 		
