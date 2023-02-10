@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<absolute>
+	<component id="bg" left="0" top="0" />
+	<component id="seed" left="0" top="0" />
+</absolute>
