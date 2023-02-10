@@ -21,8 +21,6 @@ class GameState extends State {
 	public function enter() {
 		
 		new UI_Game(ecs);
-		//new UI_Card(ecs);
-		//new UI_Status(ecs);
 	}
 	
 	public function exit() {

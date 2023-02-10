@@ -1,5 +1,7 @@
 package ui.elements;
 
+import mono.timing.TimingCommand;
+import mono.timing.Timing;
 import mono.interactive.shapes.Rect;
 import mono.interactive.Interactive;
 import h2d.Bitmap;
@@ -7,38 +9,35 @@ import haxe.ui.core.Component;
 import IDs.SheetID;
 import mono.animation.AnimCommand;
 import mono.animation.AnimRequest;
-import IDs.ParentID;
-import IDs.LayerID;
-import mono.graphics.DisplayListCommand;
 import mono.command.Command;
-import ecs.Universe;
-import haxe.ui.containers.Absolute;
 
-// @:build(haxe.ui.ComponentBuilder.build("assets/ui/card.xml"))
-class UI_Button extends Component {
+class UI_PlayB extends Component {
 	
-	public function new(ecs:Universe, frames:Array<String>, onSelect:()->Void, width:Int, height:Int) {
+	public function new() {
 		super();
 		
 		styleable = false;
 		
+		final ecs = Main.ecs;
 		final uiE = ecs.createEntity();
 		
 		final anim:Array<AnimRequest> = [
 			{
 				name : "idle",
-				frameNames : [frames[0]],
+				frameNames : ["playcard_idle"],
 				loop : false
 			},
 			{
 				name : "hover",
-				frameNames : [frames[1]],
+				frameNames : ["playcard_hover"],
 				loop : false
 			}
 		];
 		
+		final bm:Bitmap = getImageDisplay().sprite;
+		final rect = new Rect(0, 0, 0, 0); // gets populated on the next frame
 		final int:Interactive = {
-			shape : new Rect(left + width / 2, top + height / 2, width, height),
+			shape : rect,
 			onOver : () -> {
 				Command.queue(PLAY_ANIMATION(uiE, "hover"));
 				hxd.System.setCursor(Button);
@@ -48,11 +47,16 @@ class UI_Button extends Component {
 				Command.queue(PLAY_ANIMATION(uiE, "idle"));
 				hxd.System.setCursor(Default);
 			},
-			onSelect : onSelect
+			onSelect : () -> trace("K")
 		};
 		
-		ecs.setComponents(uiE, int, (this:Component), (this.getImageDisplay().sprite:Bitmap));
-		Command.queue(CREATE_ANIMATIONS(uiE, SPRITES, anim, "idle"));
+		ecs.setComponents(uiE, int, (this:Component), bm);
+		Command.queueMany(
+			CREATE_ANIMATIONS(uiE, SPRITES, anim, "idle"),
+			ADD_UPDATER(Main.ecs.createEntity(), Timing.delay(0.001, () -> {
+				rect.setFromTL(left, top, bm.tile.width, bm.tile.height);
+			}))
+		);
 		
 		ready();
 	}

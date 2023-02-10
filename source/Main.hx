@@ -48,7 +48,7 @@ import mono.utils.ResTools;
 
 class Main extends App {
 	
-	var ecs:Universe;
+	public static var ecs(default, null):Universe;
 	
 	var updateLoop:Updater;
 	var renderLoop:Updater;

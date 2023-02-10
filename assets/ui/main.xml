@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <absolute>
 	<component id="drawCard" left="50" top="220" />
+	<ui_card left="200" top="200" />
+	<ui_status left="400" top="200" />
+	<ui_playb left="100" top="350" />
 </absolute>

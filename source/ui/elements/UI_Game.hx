@@ -16,11 +16,7 @@ class UI_Game extends Absolute {
 		
 		styleable = false;
 		
-		var play = UI_Setup.setupButton(ecs, drawCard, ["playcard_idle", "playcard_hover"], () -> trace("K"), 219 >> 1, 229 >> 1);
-		
-		var card = new UI_Card(ecs);
-		card.left = 200; card.top = 200;
-		addComponent(card);
+		// var play = UI_Setup.setupButton(ecs, drawCard, ["playcard_idle", "playcard_hover"], () -> trace("K"), 219 >> 1, 229 >> 1);
 		
 		Command.queue(ADD_TO(this, S2D, DEBUG));
 		

@@ -9,17 +9,17 @@ import IDs.ParentID;
 import IDs.LayerID;
 import mono.graphics.DisplayListCommand;
 import mono.command.Command;
-import ecs.Universe;
 import haxe.ui.containers.Absolute;
 
 @:build(haxe.ui.ComponentBuilder.build("assets/ui/card.xml"))
 class UI_Card extends Absolute {
 	
-	public function new(ecs:Universe) {
+	public function new() {
 		super();
 		
 		styleable = false;
 		
+		final ecs = Main.ecs;
 		final bgE = ecs.createEntity();
 		
 		final bgAnim:Array<AnimRequest> = [
