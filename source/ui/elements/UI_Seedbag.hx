@@ -54,7 +54,7 @@ class UI_Seedbag extends Component {
 		Command.queueMany(
 			CREATE_ANIMATIONS(uiE, SPRITES, anim, "idle"),
 			ADD_UPDATER(Main.ecs.createEntity(), Timing.delay(0.001, () -> {
-				rect.setFromTL(left, top, bm.tile.width, bm.tile.height);
+				rect.setFromTL(parentComponent.left + left, parentComponent.top + top, bm.tile.width, bm.tile.height);
 			}))
 		);
 		

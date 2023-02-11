@@ -117,11 +117,10 @@ class UI_Card extends Absolute {
 			CREATE_ANIMATIONS(bgE, SPRITES, bgAnim, "idle"),
 			CREATE_ANIMATIONS(cardE, SPRITES, cardAnim, "state0"),
 			ADD_UPDATER(Main.ecs.createEntity(), Timing.delay(0.01, () -> {
-				rect.setFromTL(left, top, bm.tile.width, bm.tile.height);
+				rect.setFromTL(parentComponent.left + left, parentComponent.top + top, bm.tile.width, bm.tile.height);
 			})),
 			ADD_UPDATER(bgE, upTween),
-			ADD_UPDATER(bgE, downTween),
-			ADD_TO(this, S2D, DEBUG)
+			ADD_UPDATER(bgE, downTween)
 		);
 		
 		ready();

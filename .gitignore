@@ -1,5 +1,7 @@
 .ecs_invalidation
 *.ogg
+*.mp3
+*.wav
 export/hl
 export/js/*.js
 export/js/*.map

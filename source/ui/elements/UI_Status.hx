@@ -55,8 +55,7 @@ class UI_Status extends Absolute {
 		ecs.setComponents(bgE, (bg:Component), (bg.getImageDisplay().sprite:Bitmap));
 		
 		Command.queueMany(
-			CREATE_ANIMATIONS(bgE, SPRITES, bgAnim, "idle"),
-			ADD_TO(this, S2D, DEBUG)
+			CREATE_ANIMATIONS(bgE, SPRITES, bgAnim, "idle")
 		);
 		
 		ready();

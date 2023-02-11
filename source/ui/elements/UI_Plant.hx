@@ -1,17 +1,22 @@
 package ui.elements;
 
 import mono.timing.TimingCommand;
-import mono.timing.Timing;
-import mono.interactive.shapes.Rect;
 import mono.interactive.Interactive;
+import mono.interactive.shapes.Rect;
+import mono.timing.Timing;
 import h2d.Bitmap;
 import haxe.ui.core.Component;
 import IDs.SheetID;
 import mono.animation.AnimCommand;
 import mono.animation.AnimRequest;
+import IDs.ParentID;
+import IDs.LayerID;
+import mono.graphics.DisplayListCommand;
 import mono.command.Command;
+import haxe.ui.containers.Absolute;
 
-class UI_Play extends Component {
+@:build(haxe.ui.ComponentBuilder.build("assets/ui/plant.xml"))
+class UI_Plant extends Absolute {
 	
 	public function new() {
 		super();
@@ -19,40 +24,48 @@ class UI_Play extends Component {
 		styleable = false;
 		
 		final ecs = Main.ecs;
-		final uiE = ecs.createEntity();
+		final soilE = ecs.createEntity();
 		
-		final anim:Array<AnimRequest> = [
+		final soilAnim:Array<AnimRequest> = [
 			{
 				name : "idle",
-				frameNames : ["playcard_idle"],
-				loop : false
-			},
-			{
-				name : "hover",
-				frameNames : ["playcard_hover"],
+				frameNames : ["seedbag_closed"],
 				loop : false
 			}
 		];
 		
-		final bm:Bitmap = getImageDisplay().sprite;
+		final plantE = ecs.createEntity();
+		
+		var plantAnim:Array<AnimRequest> = [
+			{
+				name : "idle",
+				frameNames : ["seed_greeny"],
+				loop : false
+			}
+		];
+		
+		final bm:Bitmap = soil.getImageDisplay().sprite;
 		final rect = new Rect(0, 0, 0, 0); // gets populated on the next frame
 		final int:Interactive = {
 			shape : rect,
 			onOver : () -> {
-				Command.queue(PLAY_ANIMATION(uiE, "hover"));
+				
 				hxd.System.setCursor(Button);
 				
 			},
 			onOut : () -> {
-				Command.queue(PLAY_ANIMATION(uiE, "idle"));
+				
 				hxd.System.setCursor(Default);
 			},
 			onSelect : () -> trace("K")
 		};
 		
-		ecs.setComponents(uiE, int, (this:Component), bm);
+		ecs.setComponents(soilE, int, (soil:Component), bm);
+		ecs.setComponents(plantE, (plant:Component), (plant.getImageDisplay().sprite:Bitmap));
+		
 		Command.queueMany(
-			CREATE_ANIMATIONS(uiE, SPRITES, anim, "idle"),
+			CREATE_ANIMATIONS(soilE, SPRITES, soilAnim, "idle"),
+			CREATE_ANIMATIONS(plantE, SPRITES, plantAnim, "idle"),
 			ADD_UPDATER(Main.ecs.createEntity(), Timing.delay(0.001, () -> {
 				rect.setFromTL(parentComponent.left + left, parentComponent.top + top, bm.tile.width, bm.tile.height);
 			}))

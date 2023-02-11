@@ -90,8 +90,7 @@ class UI_Seed extends Absolute {
 		Command.queueMany(
 			CREATE_ANIMATIONS(bgE, SPRITES, bgAnim, "idle"),
 			CREATE_ANIMATIONS(seedE, SPRITES, seedAnim, "cactus"),
-			ADD_UPDATER(seedE, wave),
-			ADD_TO(this, S2D, DEBUG)
+			ADD_UPDATER(seedE, wave)
 		);
 		
 		ready();

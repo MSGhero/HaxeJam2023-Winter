@@ -41,8 +41,7 @@ class UI_Window extends Absolute {
 		
 		Command.queueMany(
 			CREATE_ANIMATIONS(dayE, SPRITES, anims, "day"),
-			COPY_ANIMATIONS(nightE, dayE, "night"),
-			ADD_TO(this, S2D, DEBUG)
+			COPY_ANIMATIONS(nightE, dayE, "night")
 		);
 		
 		nighttime.getImageDisplay().sprite.visible = false;
