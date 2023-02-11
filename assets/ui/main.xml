@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <absolute>
 	<ui_window left="43" top="43" />
+	<component left="402" top="346" width="422" height="172" style="background-image:'images/frame_green_1x.png';background-image-slice: 20 32 115 93" />
 	<ui_card left="430" top="380" />
 	<ui_card left="520" top="380" />
 	<ui_card left="610" top="380" />
 	<ui_card left="700" top="380" />
 	<ui_card left="790" top="380" />
-	<ui_status left="180" top="350" />
+	<ui_status left="186" top="385" />
 	<ui_play left="425" top="4" />
 	<ui_seed left="38" top="360" />
+	<ui_seedbag left="855" top="406" />
 </absolute>

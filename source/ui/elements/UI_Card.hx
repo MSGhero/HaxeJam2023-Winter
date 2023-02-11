@@ -108,6 +108,7 @@ class UI_Card extends Absolute {
 		
 		upTween.autoDispose = downTween.autoDispose = false;
 		upTween.repetitions = downTween.repetitions = 0;
+		upTween.ease = downTween.ease = f -> (2 - f) * f;
 		
 		ecs.setComponents(bgE, int, (bg:Component), bm);
 		ecs.setComponents(cardE, (card:Component), (card.getImageDisplay().sprite:Bitmap));

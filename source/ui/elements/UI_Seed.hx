@@ -1,5 +1,7 @@
 package ui.elements;
 
+import mono.timing.TimingCommand;
+import mono.timing.Timing;
 import h2d.Bitmap;
 import haxe.ui.core.Component;
 import IDs.SheetID;
@@ -75,12 +77,20 @@ class UI_Seed extends Absolute {
 			}
 		];
 		
+		final wave = Timing.tween(2.5, f -> {
+			seed.getImageDisplay().sprite.y = 4 * Math.cos(6.28 * f); // for some reason, the component doesn't like negative y (layout related?)
+		});
+		
+		wave.autoDispose = false;
+		wave.repetitions = -1;
+		
 		ecs.setComponents(bgE, (bg:Component), (bg.getImageDisplay().sprite:Bitmap));
 		ecs.setComponents(seedE, (seed:Component), (seed.getImageDisplay().sprite:Bitmap));
 		
 		Command.queueMany(
 			CREATE_ANIMATIONS(bgE, SPRITES, bgAnim, "idle"),
 			CREATE_ANIMATIONS(seedE, SPRITES, seedAnim, "cactus"),
+			ADD_UPDATER(seedE, wave),
 			ADD_TO(this, S2D, DEBUG)
 		);
 		
