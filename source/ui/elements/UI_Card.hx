@@ -1,5 +1,10 @@
 package ui.elements;
 
+import mono.timing.TimingCommand;
+import mono.interactive.Interactive;
+import mono.interactive.shapes.Rect;
+import mono.timing.Timing;
+import mono.timing.Tweener;
 import h2d.Bitmap;
 import haxe.ui.core.Component;
 import IDs.SheetID;
@@ -13,6 +18,9 @@ import haxe.ui.containers.Absolute;
 
 @:build(haxe.ui.ComponentBuilder.build("assets/ui/card.xml"))
 class UI_Card extends Absolute {
+	
+	var upTween:Tweener;
+	var downTween:Tweener;
 	
 	public function new() {
 		super();
@@ -70,12 +78,48 @@ class UI_Card extends Absolute {
 			}
 		];
 		
-		ecs.setComponents(bgE, (bg:Component), (bg.getImageDisplay().sprite:Bitmap));
+		final bm:Bitmap = bg.getImageDisplay().sprite;
+		final rect = new Rect(0, 0, 0, 0); // gets populated on the next frame
+		final int:Interactive = {
+			shape : rect,
+			onOver : () -> {
+				downTween.cancel();
+				upTween.resetCounter();
+				upTween.repetitions = 1;
+				hxd.System.setCursor(Button);
+				
+			},
+			onOut : () -> {
+				upTween.cancel();
+				downTween.resetCounter();
+				downTween.repetitions = 1;
+				hxd.System.setCursor(Default);
+			},
+			onSelect : () -> trace("K")
+		};
+		
+		upTween = Timing.tween(0.1, f -> {
+			top = rect.top - 30 * f;
+		});
+		
+		downTween = Timing.tween(0.1, f -> {
+			top = rect.top - 30 * (1 - f);
+		});
+		
+		upTween.autoDispose = downTween.autoDispose = false;
+		upTween.repetitions = downTween.repetitions = 0;
+		
+		ecs.setComponents(bgE, int, (bg:Component), bm);
 		ecs.setComponents(cardE, (card:Component), (card.getImageDisplay().sprite:Bitmap));
 		
 		Command.queueMany(
 			CREATE_ANIMATIONS(bgE, SPRITES, bgAnim, "idle"),
 			CREATE_ANIMATIONS(cardE, SPRITES, cardAnim, "state0"),
+			ADD_UPDATER(Main.ecs.createEntity(), Timing.delay(0.01, () -> {
+				rect.setFromTL(left, top, bm.tile.width, bm.tile.height);
+			})),
+			ADD_UPDATER(bgE, upTween),
+			ADD_UPDATER(bgE, downTween),
 			ADD_TO(this, S2D, DEBUG)
 		);
 		

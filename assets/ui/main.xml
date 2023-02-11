@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<absolute width="960" height="540">
+<absolute>
 	<ui_window left="43" top="43" />
 	<ui_card left="430" top="380" />
 	<ui_card left="520" top="380" />
@@ -7,6 +7,6 @@
 	<ui_card left="700" top="380" />
 	<ui_card left="790" top="380" />
 	<ui_status left="180" top="350" />
-	<ui_playb left="425" top="4" />
+	<ui_play left="425" top="4" />
 	<ui_seed left="38" top="360" />
 </absolute>

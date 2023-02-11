@@ -11,7 +11,7 @@ import mono.animation.AnimCommand;
 import mono.animation.AnimRequest;
 import mono.command.Command;
 
-class UI_PlayB extends Component {
+class UI_Play extends Component {
 	
 	public function new() {
 		super();

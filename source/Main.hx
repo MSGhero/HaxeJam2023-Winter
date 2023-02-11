@@ -1,5 +1,8 @@
 package;
 
+import mono.interactive.CursorCommand;
+import ecs.Entity;
+import mono.timing.TimingCommand;
 import h2d.filter.Nothing;
 import mono.input.MouseInput;
 import io.newgrounds.NG;
@@ -154,11 +157,10 @@ class Main extends App {
 		#end
 		
 		#if js
-		//hxd.Window.getInstance().useScreenPixels = false;
+		//hxd.Window.getInstance().useScreenPixels = false; // i don't think i want this?
 		#end
 		
 		onResize();
-		
 		postInit();
 	}
 	
@@ -188,6 +190,7 @@ class Main extends App {
 		var game = new states.GameState(ecs);
 		
 		Command.queueMany(
+			DISABLE_CURSOR,
 			ADD_PARENT(s2d, S2D),
 			ADD_SHEET(sheet, SPRITES),
 			CREATE_BATCH(MAIN_BATCH, S2D, S2D_GAME),
@@ -195,7 +198,11 @@ class Main extends App {
 			REGISTER_STATE(game, GAME_STATE),
 			ENTER(GAME_STATE),
 			REGISTER_STATE(debug, DEBUG_STATE),
-			ENTER(DEBUG_STATE)
+			ENTER(DEBUG_STATE),
+			ADD_UPDATER(Entity.none, Timing.delay(0.2, () -> {
+				Command.queue(ENABLE_CURSOR); // disable input until after frame0 stuff happens
+				// maybe a cleaner way for stuff like this
+			}))
 		);
 	}
 	
