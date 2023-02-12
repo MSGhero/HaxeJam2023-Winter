@@ -6,9 +6,6 @@ import haxe.ui.core.Component;
 import IDs.SheetID;
 import mono.animation.AnimCommand;
 import mono.animation.AnimRequest;
-import IDs.ParentID;
-import IDs.LayerID;
-import mono.graphics.DisplayListCommand;
 import mono.command.Command;
 import haxe.ui.containers.Absolute;
 
@@ -59,5 +56,11 @@ class UI_Status extends Absolute {
 		);
 		
 		ready();
+	}
+	
+	public function setState(soilP:Float, tempP:Float, lightP:Float) {
+		soil.pos = soilP * 100;
+		temp.pos = tempP * 100;
+		light.pos = lightP * 100;
 	}
 }

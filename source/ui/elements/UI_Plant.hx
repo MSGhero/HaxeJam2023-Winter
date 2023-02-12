@@ -9,14 +9,13 @@ import haxe.ui.core.Component;
 import IDs.SheetID;
 import mono.animation.AnimCommand;
 import mono.animation.AnimRequest;
-import IDs.ParentID;
-import IDs.LayerID;
-import mono.graphics.DisplayListCommand;
 import mono.command.Command;
 import haxe.ui.containers.Absolute;
 
 @:build(haxe.ui.ComponentBuilder.build("assets/ui/plant.xml"))
 class UI_Plant extends Absolute {
+	
+	public var onPlant:()->Void = null;
 	
 	public function new() {
 		super();
@@ -57,7 +56,7 @@ class UI_Plant extends Absolute {
 				
 				hxd.System.setCursor(Default);
 			},
-			onSelect : () -> trace("K")
+			onSelect : () -> if (onPlant != null) onPlant()
 		};
 		
 		ecs.setComponents(soilE, int, (soil:Component), bm);

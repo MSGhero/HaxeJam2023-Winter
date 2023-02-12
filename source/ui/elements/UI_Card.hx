@@ -10,9 +10,6 @@ import haxe.ui.core.Component;
 import IDs.SheetID;
 import mono.animation.AnimCommand;
 import mono.animation.AnimRequest;
-import IDs.ParentID;
-import IDs.LayerID;
-import mono.graphics.DisplayListCommand;
 import mono.command.Command;
 import haxe.ui.containers.Absolute;
 
@@ -21,6 +18,8 @@ class UI_Card extends Absolute {
 	
 	var upTween:Tweener;
 	var downTween:Tweener;
+	
+	public var onCard:()->Void = null;
 	
 	public function new() {
 		super();
@@ -95,7 +94,7 @@ class UI_Card extends Absolute {
 				downTween.repetitions = 1;
 				hxd.System.setCursor(Default);
 			},
-			onSelect : () -> trace("K")
+			onSelect : () -> if (onCard != null) onCard()
 		};
 		
 		upTween = Timing.tween(0.1, f -> {

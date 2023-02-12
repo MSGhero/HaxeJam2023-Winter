@@ -2,8 +2,8 @@
 <absolute>
 	<component id="daytime" left="0" top="0" />
 	<component id="nighttime" left="0" top="0" />
-	<ui_plant left="0" top="100" />
-	<ui_plant left="200" top="100" />
-	<ui_plant left="400" top="100" />
-	<ui_plant left="600" top="100" />
+	<ui_plant id="plant0" left="0" top="100" />
+	<ui_plant id="plant1" left="200" top="100" />
+	<ui_plant id="plant2" left="400" top="100" />
+	<ui_plant id="plant3" left="600" top="100" />
 </absolute>

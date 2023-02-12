@@ -1,5 +1,6 @@
 package ui.elements;
 
+import ecs.Entity;
 import mono.timing.TimingCommand;
 import mono.timing.Timing;
 import h2d.Bitmap;
@@ -7,14 +8,14 @@ import haxe.ui.core.Component;
 import IDs.SheetID;
 import mono.animation.AnimCommand;
 import mono.animation.AnimRequest;
-import IDs.ParentID;
-import IDs.LayerID;
-import mono.graphics.DisplayListCommand;
 import mono.command.Command;
 import haxe.ui.containers.Absolute;
 
 @:build(haxe.ui.ComponentBuilder.build("assets/ui/seed.xml"))
 class UI_Seed extends Absolute {
+	
+	final bgE:Entity;
+	final seedE:Entity;
 	
 	public function new() {
 		super();
@@ -22,7 +23,7 @@ class UI_Seed extends Absolute {
 		styleable = false;
 		
 		final ecs = Main.ecs;
-		final bgE = ecs.createEntity();
+		bgE = ecs.createEntity();
 		
 		final bgAnim:Array<AnimRequest> = [
 			{
@@ -42,7 +43,7 @@ class UI_Seed extends Absolute {
 			}
 		];
 		
-		final seedE = ecs.createEntity();
+		seedE = ecs.createEntity();
 		
 		var seedAnim:Array<AnimRequest> = [
 			{
@@ -94,5 +95,13 @@ class UI_Seed extends Absolute {
 		);
 		
 		ready();
+	}
+	
+	public function setBG(name:String) {
+		Command.queue(PLAY_ANIMATION(bgE, name));
+	}
+	
+	public function setSeed(name:String) {
+		Command.queue(PLAY_ANIMATION(seedE, name));
 	}
 }
