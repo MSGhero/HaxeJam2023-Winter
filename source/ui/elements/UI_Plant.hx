@@ -27,8 +27,23 @@ class UI_Plant extends Absolute {
 		
 		final soilAnim:Array<AnimRequest> = [
 			{
-				name : "idle",
-				frameNames : ["seedbag_closed"],
+				name : "sandy",
+				frameNames : ["soil_sandy"],
+				loop : false
+			},
+			{
+				name : "none",
+				frameNames : ["soil_none"],
+				loop : false
+			},
+			{
+				name : "humus",
+				frameNames : ["soil_humus"],
+				loop : false
+			},
+			{
+				name : "water",
+				frameNames : ["soil_water"],
 				loop : false
 			}
 		];

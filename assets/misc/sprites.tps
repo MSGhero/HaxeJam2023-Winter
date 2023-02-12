@@ -246,6 +246,10 @@
             <key type="filename">../images/frame_green.png</key>
             <key type="filename">../images/frame_light.png</key>
             <key type="filename">../images/frame_lightshadowed.png</key>
+            <key type="filename">../images/soil_humus.png</key>
+            <key type="filename">../images/soil_none.png</key>
+            <key type="filename">../images/soil_sandy.png</key>
+            <key type="filename">../images/soil_water.png</key>
             <key type="filename">../images/sprout.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -258,6 +262,21 @@
                 <rect>63,63,125,125</rect>
                 <key>scale9Paddings</key>
                 <rect>63,63,125,125</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../images/frame_green_1x.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>31,31,63,63</rect>
+                <key>scale9Paddings</key>
+                <rect>31,31,63,63</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
