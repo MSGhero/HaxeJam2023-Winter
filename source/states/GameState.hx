@@ -15,6 +15,7 @@ class GameState extends State {
 	
 	var uig:UI_Game;
 	
+	var turnCount:Int;
 	var plants:Array<Plant>;
 	
 	public function init() {
@@ -46,6 +47,12 @@ class GameState extends State {
 			uig.seed.setSeed(plants[3].type);
 			uig.status.setState(plants[3].soil, plants[3].temp, plants[3].light);
 		};
+		
+		uig.card0.onCard = () -> {
+			// how does this interact with the play button?
+			// card doesn't tween down?
+			// and then turns
+		};
 	}
 	
 	public function destroy() {
@@ -58,20 +65,53 @@ class GameState extends State {
 	
 	public function enter() {
 		
-		Command.queue(ADD_TO(uig, S2D, S2D_GAME));
+		turnCount = 0;
 		
-		Command.queue(PLAY(MUSIC, "music/guitar_track_plant_game.ogg", true, 1, "day"));
-		Command.queue(PLAY(MUSIC, "music/jazz_track_plant_game.ogg", true, 0, "night"));
+		Command.queueMany(
+			ADD_TO(uig, S2D, S2D_GAME),
+			PLAY(MUSIC, "music/guitar_track_plant_game.ogg", true, 1, "day"),
+			PLAY(MUSIC, "music/jazz_track_plant_game.ogg", true, 0, "night")
+		);
 		
 		Command.queue(ADD_UPDATER(Entity.none, Timing.delay(7, () -> {
-			Command.queueMany(
-				FADE(1, 1, 0, f -> f * f, "day"),
-				FADE(2, 0, 1, null, "night")
-			);
+			onNight();
 		})));
 	}
 	
 	public function exit() {
 		
+	}
+	
+	function onDay() {
+		Command.queueMany(
+			FADE(1, 1, 0, f -> f * f, "night"),
+			FADE(2, 0, 1, null, "day")
+		);
+	}
+	
+	function onNight() {
+		Command.queueMany(
+			FADE(1, 1, 0, f -> f * f, "day"),
+			FADE(2, 0, 1, null, "night")
+		);
+	}
+	
+	function updatePlants() {
+		
+		if (plants[0] != null) {
+			uig.window.plant0.setPlant(plants[0].soilType, plants[0].type);
+		}
+		
+		if (plants[1] != null) {
+			uig.window.plant0.setPlant(plants[1].soilType, plants[1].type);
+		}
+		
+		if (plants[2] != null) {
+			uig.window.plant0.setPlant(plants[2].soilType, plants[2].type);
+		}
+		
+		if (plants[3] != null) {
+			uig.window.plant0.setPlant(plants[3].soilType, plants[3].type);
+		}
 	}
 }

@@ -1,5 +1,6 @@
 package ui.elements;
 
+import ecs.Entity;
 import mono.timing.TimingCommand;
 import mono.interactive.Interactive;
 import mono.interactive.shapes.Rect;
@@ -15,6 +16,9 @@ import haxe.ui.containers.Absolute;
 @:build(haxe.ui.ComponentBuilder.build("assets/ui/plant.xml"))
 class UI_Plant extends Absolute {
 	
+	final soilE:Entity;
+	final plantE:Entity;
+	
 	public var onPlant:()->Void = null;
 	
 	public function new() {
@@ -23,7 +27,7 @@ class UI_Plant extends Absolute {
 		styleable = false;
 		
 		final ecs = Main.ecs;
-		final soilE = ecs.createEntity();
+		soilE = ecs.createEntity();
 		
 		final soilAnim:Array<AnimRequest> = [
 			{
@@ -48,7 +52,7 @@ class UI_Plant extends Absolute {
 			}
 		];
 		
-		final plantE = ecs.createEntity();
+		plantE = ecs.createEntity();
 		
 		var plantAnim:Array<AnimRequest> = [
 			{
@@ -86,5 +90,10 @@ class UI_Plant extends Absolute {
 		);
 		
 		ready();
+	}
+	
+	public function setPlant(soilType:String, plantType:String) {
+		if (soilType != null && soilType.length > 0) Command.queue(PLAY_ANIMATION(soilE, soilType));
+		if (plantType != null && plantType.length > 0) Command.queue(PLAY_ANIMATION(plantE, plantType));
 	}
 }
