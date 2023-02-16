@@ -82,7 +82,7 @@ class UI_Plant extends Absolute {
 		ecs.setComponents(plantE, (plant:Component), (plant.getImageDisplay().sprite:Bitmap));
 		
 		Command.queueMany(
-			CREATE_ANIMATIONS(soilE, SPRITES, soilAnim, "idle"),
+			CREATE_ANIMATIONS(soilE, SPRITES, soilAnim, "sandy"),
 			CREATE_ANIMATIONS(plantE, SPRITES, plantAnim, "idle"),
 			ADD_UPDATER(Main.ecs.createEntity(), Timing.delay(0.001, () -> {
 				rect.setFromTL(parentComponent.left + left, parentComponent.top + top, bm.tile.width, bm.tile.height);

@@ -3,10 +3,10 @@
 	<ui_window id="window" left="43" top="43" />
 	<component left="402" top="346" width="422" height="172" style="background-image:'images/frame_green_1x.png';background-image-slice: 20 32 115 93" />
 	<ui_card id="card0" left="430" top="380" />
-	<ui_card id="card1" left="510" top="380" />
-	<ui_card id="card2" left="590" top="380" />
-	<ui_card id="card3" left="670" top="380" />
-	<ui_card id="card4" left="750" top="380" />
+	<ui_card id="card1" left="520" top="380" />
+	<ui_card id="card2" left="610" top="380" />
+	<ui_card id="card3" left="700" top="380" />
+	<ui_card id="card4" left="790" top="380" />
 	<ui_status id="status" left="186" top="385" />
 	<ui_play id="playb" left="425" top="4" />
 	<ui_seed id="seed" left="38" top="360" />

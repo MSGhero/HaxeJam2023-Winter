@@ -1,5 +1,6 @@
 package states;
 
+import mono.interactive.InteractiveCommand;
 import mono.timing.Timing;
 import ecs.Entity;
 import mono.timing.TimingCommand;
@@ -52,7 +53,10 @@ class GameState extends State {
 			// how does this interact with the play button?
 			// card doesn't tween down?
 			// and then turns
+			trace("K");
 		};
+		
+		Command.queue(DISABLE_INTERACTIVES(1));
 	}
 	
 	public function destroy() {
