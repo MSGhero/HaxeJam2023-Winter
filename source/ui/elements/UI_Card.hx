@@ -1,5 +1,6 @@
 package ui.elements;
 
+import interactive.InteractiveGroup;
 import mono.timing.TimingCommand;
 import mono.interactive.Interactive;
 import mono.interactive.shapes.Rect;
@@ -81,6 +82,7 @@ class UI_Card extends Absolute {
 		final rect = new Rect(0, 0, 0, 0); // gets populated on the next frame
 		final int:Interactive = {
 			shape : rect,
+			disablers : InteractiveGroup.DISABLED | InteractiveGroup.SELECT_SEED,
 			onOver : () -> {
 				downTween.cancel();
 				upTween.resetCounter();

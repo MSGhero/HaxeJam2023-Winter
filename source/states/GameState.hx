@@ -1,5 +1,6 @@
 package states;
 
+import interactive.InteractiveGroup;
 import mono.interactive.InteractiveCommand;
 import mono.timing.Timing;
 import ecs.Entity;
@@ -53,10 +54,12 @@ class GameState extends State {
 			// how does this interact with the play button?
 			// card doesn't tween down?
 			// and then turns
-			trace("K");
+			
+			uig.selectseed.visible = true;
+			Command.queue(DISABLE_INTERACTIVES(InteractiveGroup.SELECT_SEED));
 		};
 		
-		Command.queue(DISABLE_INTERACTIVES(1));
+		uig.selectseed.visible = false;
 	}
 	
 	public function destroy() {
