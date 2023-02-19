@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <absolute>
 	<component width="960" height="540" style="background-color:#FF8800" />
+	<ui_seed id="seed0" left="200" top="0" />
+	<ui_seed id="seed1" left="400" top="0" />
+	<ui_seed id="seed2" left="600" top="0" />
+	<ui_seed id="seed3" left="200" top="200" />
+	<ui_seed id="seed4" left="400" top="200" />
+	<ui_seed id="seed5" left="600" top="200" />
 </absolute>

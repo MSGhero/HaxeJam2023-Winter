@@ -13,6 +13,8 @@ import mono.command.Command;
 
 class UI_Seedbag extends Component {
 	
+	public var onBag:()->Void = null;
+	
 	public function new() {
 		super();
 		
@@ -47,7 +49,7 @@ class UI_Seedbag extends Component {
 				Command.queue(PLAY_ANIMATION(uiE, "idle"));
 				hxd.System.setCursor(Default);
 			},
-			onSelect : () -> trace("K")
+			onSelect : () -> if (onBag != null) onBag()
 		};
 		
 		ecs.setComponents(uiE, int, (this:Component), bm);

@@ -1,5 +1,6 @@
 package ui.elements;
 
+import interactive.InteractiveGroup;
 import mono.timing.TimingCommand;
 import mono.timing.Timing;
 import mono.interactive.shapes.Rect;
@@ -38,6 +39,7 @@ class UI_Play extends Component {
 		final rect = new Rect(0, 0, 0, 0); // gets populated on the next frame
 		final int:Interactive = {
 			shape : rect,
+			disablers : InteractiveGroup.DISABLED | InteractiveGroup.SELECT_SEED,
 			onOver : () -> {
 				Command.queue(PLAY_ANIMATION(uiE, "hover"));
 				hxd.System.setCursor(Button);

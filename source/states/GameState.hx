@@ -55,11 +55,23 @@ class GameState extends State {
 			// card doesn't tween down?
 			// and then turns
 			
+		};
+		
+		uig.seed.disable();
+		
+		uig.selectseed.seed0.onSeed = () -> trace("K");
+		uig.selectseed.seed1.disable();
+		
+		uig.seedbag.onBag = () -> {
 			uig.selectseed.visible = true;
-			Command.queue(DISABLE_INTERACTIVES(InteractiveGroup.SELECT_SEED));
+			Command.queue(DISABLE_INTERACTIVES(InteractiveGroup.SELECT_PLANT));
+			Command.queue(ENABLE_INTERACTIVES(InteractiveGroup.SELECT_SEED));
 		};
 		
 		uig.selectseed.visible = false;
+		
+		Command.queue(ENABLE_INTERACTIVES(InteractiveGroup.SELECT_PLANT));
+		Command.queue(DISABLE_INTERACTIVES(InteractiveGroup.SELECT_SEED));
 	}
 	
 	public function destroy() {

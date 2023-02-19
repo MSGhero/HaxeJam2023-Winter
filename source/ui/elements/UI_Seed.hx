@@ -1,5 +1,9 @@
 package ui.elements;
 
+import mono.interactive.InteractiveCommand;
+import interactive.InteractiveGroup;
+import mono.interactive.Interactive;
+import mono.interactive.shapes.Rect;
 import ecs.Entity;
 import mono.timing.TimingCommand;
 import mono.timing.Timing;
@@ -16,6 +20,8 @@ class UI_Seed extends Absolute {
 	
 	final bgE:Entity;
 	final seedE:Entity;
+	
+	public var onSeed:()->Void;
 	
 	public function new() {
 		super();
@@ -78,6 +84,21 @@ class UI_Seed extends Absolute {
 			}
 		];
 		
+		final bm:Bitmap = bg.getImageDisplay().sprite;
+		final rect = new Rect(0, 0, 0, 0); // gets populated on the next frame
+		final int:Interactive = {
+			shape : rect,
+			disablers : InteractiveGroup.DISABLED | InteractiveGroup.SELECT_SEED,
+			onOver : () -> {
+				hxd.System.setCursor(Button);
+				
+			},
+			onOut : () -> {
+				hxd.System.setCursor(Default);
+			},
+			onSelect : () -> if (onSeed != null) onSeed()
+		};
+		
 		final wave = Timing.tween(2.5, f -> {
 			seed.getImageDisplay().sprite.y = 4 * Math.cos(6.28 * f); // for some reason, the component doesn't like negative y (layout related?)
 		});
@@ -85,12 +106,15 @@ class UI_Seed extends Absolute {
 		wave.autoDispose = false;
 		wave.repetitions = -1;
 		
-		ecs.setComponents(bgE, (bg:Component), (bg.getImageDisplay().sprite:Bitmap));
+		ecs.setComponents(bgE, int, (bg:Component), bm);
 		ecs.setComponents(seedE, (seed:Component), (seed.getImageDisplay().sprite:Bitmap));
 		
 		Command.queueMany(
 			CREATE_ANIMATIONS(bgE, SPRITES, bgAnim, "idle"),
 			CREATE_ANIMATIONS(seedE, SPRITES, seedAnim, "cactus"),
+			ADD_UPDATER(Main.ecs.createEntity(), Timing.delay(0.01, () -> {
+				rect.setFromTL(parentComponent.left + left, parentComponent.top + top, bm.tile.width, bm.tile.height);
+			})),
 			ADD_UPDATER(seedE, wave)
 		);
 		
@@ -103,5 +127,13 @@ class UI_Seed extends Absolute {
 	
 	public function setSeed(name:String) {
 		Command.queue(PLAY_ANIMATION(seedE, name));
+	}
+	
+	public function enable() {
+		Command.queue(ENABLE_INTERACTIVE(bgE));
+	}
+	
+	public function disable() {
+		Command.queue(DISABLE_INTERACTIVE(bgE));
 	}
 }
