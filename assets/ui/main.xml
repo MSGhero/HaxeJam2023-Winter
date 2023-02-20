@@ -10,6 +10,5 @@
 	<ui_status id="status" left="186" top="385" />
 	<ui_play id="playb" left="425" top="4" />
 	<ui_seed id="seed" left="38" top="360" />
-	<ui_seedbag id="seedbag" left="855" top="406" /> 
-	<ui_selectseed id="selectseed" left="0" top="0" /> 
+	<ui_seedbag id="seedbag" left="855" top="406" />
 </absolute>

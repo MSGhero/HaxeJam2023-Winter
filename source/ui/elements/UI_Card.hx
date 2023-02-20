@@ -1,6 +1,5 @@
 package ui.elements;
 
-import interactive.InteractiveGroup;
 import mono.timing.TimingCommand;
 import mono.interactive.Interactive;
 import mono.interactive.shapes.Rect;
@@ -15,12 +14,12 @@ import mono.command.Command;
 import haxe.ui.containers.Absolute;
 
 @:build(haxe.ui.ComponentBuilder.build("assets/ui/card.xml"))
-class UI_Card extends Absolute {
+class UI_Card extends Absolute implements IUI {
 	
 	var upTween:Tweener;
 	var downTween:Tweener;
 	
-	public var onCard:()->Void = null;
+	public var interactive(default, null):Interactive;
 	
 	public function new() {
 		super();
@@ -80,23 +79,19 @@ class UI_Card extends Absolute {
 		
 		final bm:Bitmap = bg.getImageDisplay().sprite;
 		final rect = new Rect(0, 0, 0, 0); // gets populated on the next frame
-		final int:Interactive = {
+		interactive = {
 			shape : rect,
-			disablers : InteractiveGroup.DISABLED | InteractiveGroup.SELECT_SEED,
 			onOver : () -> {
 				downTween.cancel();
 				upTween.resetCounter();
 				upTween.repetitions = 1;
-				hxd.System.setCursor(Button);
 				
 			},
 			onOut : () -> {
 				upTween.cancel();
 				downTween.resetCounter();
 				downTween.repetitions = 1;
-				hxd.System.setCursor(Default);
-			},
-			onSelect : () -> if (onCard != null) onCard()
+			}
 		};
 		
 		upTween = Timing.tween(0.1, f -> {
@@ -111,7 +106,7 @@ class UI_Card extends Absolute {
 		upTween.repetitions = downTween.repetitions = 0;
 		upTween.ease = downTween.ease = f -> (2 - f) * f;
 		
-		ecs.setComponents(bgE, int, (bg:Component), bm);
+		ecs.setComponents(bgE, interactive, (bg:Component), bm);
 		ecs.setComponents(cardE, (card:Component), (card.getImageDisplay().sprite:Bitmap));
 		
 		Command.queueMany(

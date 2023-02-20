@@ -1,7 +1,6 @@
 package states;
 
-import interactive.InteractiveGroup;
-import mono.interactive.InteractiveCommand;
+import ui.elements.UI_SelectSeed;
 import mono.timing.Timing;
 import ecs.Entity;
 import mono.timing.TimingCommand;
@@ -16,6 +15,7 @@ import ui.elements.UI_Game;
 class GameState extends State {
 	
 	var uig:UI_Game;
+	var selectSeed:UI_SelectSeed;
 	
 	var turnCount:Int;
 	var plants:Array<Plant>;
@@ -24,54 +24,51 @@ class GameState extends State {
 		
 		plants = [null, null, null, null];
 		
-		uig = new UI_Game(ecs);
+		uig = new UI_Game();
+		selectSeed = new UI_SelectSeed();
 		
-		uig.window.plant0.onPlant = () -> {
+		uig.window.plant0.interactive.onSelect = () -> {
 			if (plants[0] == null) return;
 			uig.seed.setSeed(plants[0].type);
 			uig.status.setState(plants[0].soil, plants[0].temp, plants[0].light);
 		};
 		
-		uig.window.plant1.onPlant = () -> {
+		uig.window.plant1.interactive.onSelect = () -> {
 			if (plants[1] == null) return;
 			uig.seed.setSeed(plants[1].type);
 			uig.status.setState(plants[1].soil, plants[1].temp, plants[1].light);
 		};
 		
-		uig.window.plant2.onPlant = () -> {
+		uig.window.plant2.interactive.onSelect = () -> {
 			if (plants[2] == null) return;
 			uig.seed.setSeed(plants[2].type);
 			uig.status.setState(plants[2].soil, plants[2].temp, plants[2].light);
 		};
 		
-		uig.window.plant3.onPlant = () -> {
+		uig.window.plant3.interactive.onSelect = () -> {
 			if (plants[3] == null) return;
 			uig.seed.setSeed(plants[3].type);
 			uig.status.setState(plants[3].soil, plants[3].temp, plants[3].light);
 		};
 		
-		uig.card0.onCard = () -> {
+		uig.card0.interactive.onSelect = () -> {
 			// how does this interact with the play button?
 			// card doesn't tween down?
 			// and then turns
+			trace("K");
+		};
+		
+		uig.seed.interactive.enabled = false;
+		
+		selectSeed.seed0.interactive.onSelect = () -> trace("K");
+		selectSeed.seed1.interactive.enabled = false;
+		
+		uig.seedbag.interactive.onSelect = () -> {
+			selectSeed.visible = true;
 			
 		};
 		
-		uig.seed.disable();
-		
-		uig.selectseed.seed0.onSeed = () -> trace("K");
-		uig.selectseed.seed1.disable();
-		
-		uig.seedbag.onBag = () -> {
-			uig.selectseed.visible = true;
-			Command.queue(DISABLE_INTERACTIVES(InteractiveGroup.SELECT_PLANT));
-			Command.queue(ENABLE_INTERACTIVES(InteractiveGroup.SELECT_SEED));
-		};
-		
-		uig.selectseed.visible = false;
-		
-		Command.queue(ENABLE_INTERACTIVES(InteractiveGroup.SELECT_PLANT));
-		Command.queue(DISABLE_INTERACTIVES(InteractiveGroup.SELECT_SEED));
+		selectSeed.visible = false;
 	}
 	
 	public function destroy() {
@@ -88,6 +85,7 @@ class GameState extends State {
 		
 		Command.queueMany(
 			ADD_TO(uig, S2D, S2D_GAME),
+			ADD_TO(selectSeed, S2D, UI_WINDOW),
 			PLAY(MUSIC, "music/guitar_track_plant_game.ogg", true, 1, "day"),
 			PLAY(MUSIC, "music/jazz_track_plant_game.ogg", true, 0, "night")
 		);

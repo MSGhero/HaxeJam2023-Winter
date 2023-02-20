@@ -1,6 +1,5 @@
 package ui.elements;
 
-import interactive.InteractiveGroup;
 import mono.timing.TimingCommand;
 import mono.timing.Timing;
 import mono.interactive.shapes.Rect;
@@ -12,7 +11,9 @@ import mono.animation.AnimCommand;
 import mono.animation.AnimRequest;
 import mono.command.Command;
 
-class UI_Play extends Component {
+class UI_Play extends Component implements IUI {
+	
+	public var interactive(default, null):Interactive;
 	
 	public function new() {
 		super();
@@ -37,22 +38,18 @@ class UI_Play extends Component {
 		
 		final bm:Bitmap = getImageDisplay().sprite;
 		final rect = new Rect(0, 0, 0, 0); // gets populated on the next frame
-		final int:Interactive = {
+		interactive = {
 			shape : rect,
-			disablers : InteractiveGroup.DISABLED | InteractiveGroup.SELECT_SEED,
 			onOver : () -> {
 				Command.queue(PLAY_ANIMATION(uiE, "hover"));
-				hxd.System.setCursor(Button);
 				
 			},
 			onOut : () -> {
 				Command.queue(PLAY_ANIMATION(uiE, "idle"));
-				hxd.System.setCursor(Default);
-			},
-			onSelect : () -> trace("K")
+			}
 		};
 		
-		ecs.setComponents(uiE, int, (this:Component), bm);
+		ecs.setComponents(uiE, interactive, (this:Component), bm);
 		Command.queueMany(
 			CREATE_ANIMATIONS(uiE, SPRITES, anim, "idle"),
 			ADD_UPDATER(Main.ecs.createEntity(), Timing.delay(0.001, () -> {

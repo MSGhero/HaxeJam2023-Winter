@@ -11,9 +11,9 @@ import mono.animation.AnimCommand;
 import mono.animation.AnimRequest;
 import mono.command.Command;
 
-class UI_Seedbag extends Component {
+class UI_Seedbag extends Component implements IUI {
 	
-	public var onBag:()->Void = null;
+	public var interactive(default, null):Interactive;
 	
 	public function new() {
 		super();
@@ -38,21 +38,18 @@ class UI_Seedbag extends Component {
 		
 		final bm:Bitmap = getImageDisplay().sprite;
 		final rect = new Rect(0, 0, 0, 0); // gets populated on the next frame
-		final int:Interactive = {
+		interactive = {
 			shape : rect,
 			onOver : () -> {
 				Command.queue(PLAY_ANIMATION(uiE, "hover"));
-				hxd.System.setCursor(Button);
 				
 			},
 			onOut : () -> {
 				Command.queue(PLAY_ANIMATION(uiE, "idle"));
-				hxd.System.setCursor(Default);
-			},
-			onSelect : () -> if (onBag != null) onBag()
+			}
 		};
 		
-		ecs.setComponents(uiE, int, (this:Component), bm);
+		ecs.setComponents(uiE, interactive, (this:Component), bm);
 		Command.queueMany(
 			CREATE_ANIMATIONS(uiE, SPRITES, anim, "idle"),
 			ADD_UPDATER(Main.ecs.createEntity(), Timing.delay(0.001, () -> {

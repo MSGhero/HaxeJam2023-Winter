@@ -14,12 +14,12 @@ import mono.command.Command;
 import haxe.ui.containers.Absolute;
 
 @:build(haxe.ui.ComponentBuilder.build("assets/ui/plant.xml"))
-class UI_Plant extends Absolute {
+class UI_Plant extends Absolute implements IUI {
 	
 	final soilE:Entity;
 	final plantE:Entity;
 	
-	public var onPlant:()->Void = null;
+	public var interactive(default, null):Interactive;
 	
 	public function new() {
 		super();
@@ -64,21 +64,11 @@ class UI_Plant extends Absolute {
 		
 		final bm:Bitmap = soil.getImageDisplay().sprite;
 		final rect = new Rect(0, 0, 0, 0); // gets populated on the next frame
-		final int:Interactive = {
-			shape : rect,
-			onOver : () -> {
-				
-				hxd.System.setCursor(Button);
-				
-			},
-			onOut : () -> {
-				
-				hxd.System.setCursor(Default);
-			},
-			onSelect : () -> if (onPlant != null) onPlant()
+		interactive = {
+			shape : rect
 		};
 		
-		ecs.setComponents(soilE, int, (soil:Component), bm);
+		ecs.setComponents(soilE, interactive, (soil:Component), bm);
 		ecs.setComponents(plantE, (plant:Component), (plant.getImageDisplay().sprite:Bitmap));
 		
 		Command.queueMany(

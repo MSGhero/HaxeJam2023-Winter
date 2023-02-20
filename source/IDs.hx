@@ -2,10 +2,12 @@ enum abstract BatchID(String) to String {
 	var MAIN_BATCH;
 }
 
+@:transitive
 enum abstract LayerID(Int) to Int {
 	// most rear to most front
 	var BG;
 	var S2D_GAME;
+	var UI_WINDOW;
 	var DEBUG;
 }
 
@@ -13,6 +15,7 @@ enum abstract SheetID(String) to String {
 	var SPRITES;
 }
 
+@:transitive
 enum abstract ParentID(String) to String {
 	var S2D;
 	var GAME;

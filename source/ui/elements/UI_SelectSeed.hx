@@ -1,6 +1,5 @@
 package ui.elements;
 
-import ecs.Universe;
 import haxe.ui.containers.Absolute;
 
 @:build(haxe.ui.ComponentBuilder.build("assets/ui/selectseed.xml"))
